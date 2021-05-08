@@ -1,0 +1,4 @@
+#!/bin/bash
+
+#Refreshes DWM taskbar (dwmbar.sh)
+kill "$(echo $(pstree -lp) | grep -o "dwmbar.sh([0-9]\+).*sleep([0-9]\+)" | sed 's/ .*//' | grep -o  "sleep([0-9]\+" | cut -d '(' -f2- )"

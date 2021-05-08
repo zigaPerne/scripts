@@ -1,0 +1,12 @@
+#!/bin/bash
+
+while true; do
+	vis
+done &
+
+vis && ueberzug layer --parser bash 0< <(
+    declare -Ap add_command=([action]="add" [identifier]="example0" [x]="0" [y]="0" [path]="/home/ziga/Pictures/walls/ok.jpg")
+
+     sleep 5
+
+)     

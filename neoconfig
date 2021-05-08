@@ -1,0 +1,10 @@
+#!/bin/bash
+
+echo $'\n' 
+
+neofetch --ascii_colors 4 --gtk3 off --colors 4 7 7 4 7 7 --disable kernel term_font resolution --gtk2 off --os_arch off --speed_shorthand on --cpu_cores off --uptime_shorthand tiny --shell_version off
+
+
+while :; do
+	sleep 360000
+done

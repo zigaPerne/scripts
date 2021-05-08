@@ -1,0 +1,7 @@
+#!/bin/sh
+
+#Flip monitors and set gamer refresh rate
+xrandr --output DisplayPort-2 --right-of HDMI-0 --mode 1920x1080 --rate 144
+#Set weeb wallpaper
+#feh --bg-fill ~/Pictures/walls/miku.jpg --bg-fill ~/Pictures/walls/ok.jpg
+feh --bg-scale --no-xinerama ~/Pictures/walls/train.jpg

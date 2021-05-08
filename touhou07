@@ -1,0 +1,4 @@
+#!/bin/sh
+
+cd /home/ziga/programs/touhou07
+wine ~/programs/touhou07/Touhou07.exe > /dev/null 2>&1

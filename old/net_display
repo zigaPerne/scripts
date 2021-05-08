@@ -1,0 +1,4 @@
+#!/bin/sh
+
+echo "$(grep "down" /home/ziga/.local/share/net_out.txt | sed 's/[a-z]\+//' )/$(grep "up" /home/ziga/.local/share/net_out.txt | sed 's/[a-z]\+//')"
+

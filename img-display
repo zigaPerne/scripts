@@ -1,0 +1,11 @@
+#!/bin/bash
+
+ueberzug layer --parser bash 0< <(
+    declare -Ap add_command=([action]="add" [identifier]="example0" [x]="0" [y]="0" [path]="/home/ziga/Pictures/walls/ok.jpg")
+    declare -Ap add_command=([action]="add" [identifier]="example1" [x]="10" [y]="0" [path]="~/home/ziga/Pictures/walls/miku.jpg")
+    sleep 5
+    declare -Ap remove_command=([action]="remove" [identifier]="example0")
+
+    sleep 5
+		    )
+		    

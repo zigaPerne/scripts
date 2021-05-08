@@ -1,0 +1,5 @@
+#!/bin/sh
+cd /home/ziga/programs/mendeleydesktop/src/mendeleydesktop-1.19.8-linux-x86_64/bin
+./mendeleydesktop
+#./home/ziga/programs/mendeleydesktop/src/mendeleydesktop-1.19.8-linux-x86_64/bin/mendeleydesktop
+
