@@ -1,0 +1,4 @@
+#!/bin/sh
+
+#Increase key speed (for faster VIM scrolling)
+xset r rate 300 50

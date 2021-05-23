@@ -1,4 +1,0 @@
-#!/bin/bash
-
-pdf=$1
-zathura $1 & disown
