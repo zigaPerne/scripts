@@ -1,0 +1,7 @@
+#!/bin/sh
+#This script takes a channel with a "custom" url and outputs its externalId, so
+#you don't have to search the webpage source code for it. The ID is needed for
+#the RSS feed link, as it will not work with the custom name.
+
+url=$1
+curl $1 | grep -o '\"externalId\":\".\{24\}' | sed s/\"externalId\":\"//g
