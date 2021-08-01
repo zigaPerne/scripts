@@ -1,6 +1,6 @@
 #!/bin/sh
 #Sets ST opacity
 alpha=$1
-sudo sed -i -e "s/float alpha = [0-9]\?\.\?[0-9]\?;/float alpha = $1;/" ~/suckless/st/config.h
-cd ~/suckless/st
+sudo sed -i -e "s/float alpha = [0-9]\?\.\?[0-9]\?;/float alpha = $1;/" ~/Programs/suckless/st/config.h
+cd ~/Programs/suckless/st
 sudo make install

@@ -1,4 +1,0 @@
-#!/bin/sh
-
-cd /home/ziga/programs/minecraft-launcher/src/minecraft-launcher
-./minecraft-launcher

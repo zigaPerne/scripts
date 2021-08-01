@@ -1,4 +1,0 @@
-#!/bin/sh
-cd /home/ziga/programs/anki-2.1.43-linux/
-./bin/Anki
-

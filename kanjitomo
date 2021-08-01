@@ -1,2 +1,0 @@
-#!/bin/sh
-java -Xmx1200m -jar ~/git-clones/kanjitomo/src/KanjiTomo.jar -run

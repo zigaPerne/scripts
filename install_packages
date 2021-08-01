@@ -1,0 +1,6 @@
+#!/bin/sh
+# Use: 
+# $install_packages /path/to/packagelist
+
+path=$1
+sudo pacman -S --needed $(comm -12 <(pacman -Slq | sort) <(sort $1))

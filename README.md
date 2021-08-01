@@ -1,3 +1,4 @@
 # SCRIPTS
-My bash scripts for launching programs, startup scripts, shortcuts, etc. 
+Scripts folder.
 Must set path variable in .bashrc.
+Bar scripts are in dwmblocks repo.
