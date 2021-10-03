@@ -1,0 +1,5 @@
+#!/usr/bin/expect
+
+spawn pass add Email/gmail.com
+expect "*password*"
+send -- "password\r"

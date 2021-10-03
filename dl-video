@@ -1,0 +1,4 @@
+#!/bin/sh
+
+url=$1
+youtube-dl --extract-audio --audio-format mp3 --embed-thumbnail --audio-quality 0 $1

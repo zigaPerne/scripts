@@ -1,0 +1,25 @@
+#!/bin/sh
+
+websites=($(awk -F, '{if (NR!=1) {print $1}}' ~/Downloads/lastpass_export.csv | grep -o "//*.*/\?" | sed 's/\/\///' | awk -F/ '{print $1}' | sed 's/$/\/\*/' | sed 's/www.//'))
+names=($(awk -F, '{if (NR!=1) {print $1}}' ~/Downloads/lastpass_export.csv | grep -o "//*.*/\?" | sed 's/\/\///' | awk -F/ '{print $1}' | sed 's/$/\/\*/' | sed 's/www.//' | sed 's/\/\*//' | sed 's/\.[a-z]\+$//' | sed 's/accounts.google/gmail/'))
+usernames=($(awk -F, '{if (NR!=1) {print $2}}' ~/Downloads/lastpass_export.csv | sed 's/^$/?/'))
+passwords=($(awk -F, '{if (NR!=1) {print $3}}' ~/Downloads/lastpass_export.csv))
+groups="$(awk -F, '{if (NR!=1) {print $7}}' ~/Downloads/lastpass_export.csv | sed 's/Productivity Tools/Tools/')"
+uniq_groups="$(echo $groups | tr " " "\n" | sort | uniq | tr "\n" " ")"
+groups_arr=($(awk -F, '{if (NR!=1) {print $7}}' ~/Downloads/lastpass_export.csv | sed 's/Productivity Tools/Tools/'))
+
+
+#Groups can't have spaces!
+for group in "$uniq_groups"; do
+	mkdir ~/.password-store/$group
+done
+
+#echo ${usernames[*]}
+
+END=${#websites[@]}
+for i in $(seq 1 $END); do
+	touch ~/.password-store/${groups_arr[i]}/${names[i]}_${usernames[i]}
+	echo -e "${usernames[i]}\n${websites[i]}" > ~/.password-store/${groups_arr[i]}/${names[i]}_${usernames[i]}
+	gpg -r ziga@arch -e ~/.password-store/${groups_arr[i]}/${names[i]}_${usernames[i]}
+	shred -u ~/.password-store/${groups_arr[i]}/${names[i]}_${usernames[i]}
+done

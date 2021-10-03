@@ -1,0 +1,10 @@
+#!/bin/sh
+
+group="Email"
+website="gmali.com"
+username="ziga.perne"
+password="xd"
+
+pass add "$group/$website"
+expect "Enter password for $group/$website"
+send -- "$password\r"
