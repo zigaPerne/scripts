@@ -1,0 +1,7 @@
+#!/bin/sh
+
+#setsid "$TERMINAL" -i -g=90x20 -z 14 -e 'tmux new-session -s $$ "tmux source-file ~/.config/ncmpcpp/tsession" &'
+setsid "$TERMINAL" -i -g=120x30 -z 14 -e tmux new-session -s $$ "tmux source-file ~/.config/ncmpcpp/tsession" &
+
+_trap_exit() { tmux kill-session -t $$; }
+trap _trap_exit EXIT

@@ -1,0 +1,42 @@
+#!/bin/sh
+#This script takes a Spotify playlist and returns the artists and names of the songs in a simple format.
+
+#url="https://open.spotify.com/playlist/4rKbqVBpcc2UgZugV1ZNQx?si=p0WS1c1fTtegOoeIEBkq3g&utm_source=copy-link&dl_branch=1&nd=1"
+echo "Playlist URL:"
+read url
+echo "Directory to save files:"
+read dir
+
+
+#Get string with song data
+data=$(curl -s $url | grep "Spotify.Entity")
+
+#Gets song names
+song_names=($(echo $data | grep -Po ",\"is_playable\".*?(?=\",\"popularity)\"" | grep -Po "\"name\":\".*?\"" | sed 's/name\"://' | sed 's/\"//g' | sed 's/ /_/g'))
+
+#Gets artist names
+artist_names=($(echo $data | grep -Po "\",\"name\":\".*?\",\"type\":\"artist\".*?(?=,\"pop)" | grep -Po "\",\"name\":\".*?\",\"type\":\"artist\"" | sed 's/\",\"name\":\"//g' | sed 's/\",\"type\":\"artist\"//g'| sed 's/ /_/g'))
+
+#Counts how many artists appear in a song
+no_of_artists=($(echo $data | grep -Po "\",\"name\":\".*?\",\"type\":\"artist\".*?(?=,\"pop)" | perl -lne 'print s/\"artist\"//g'))
+
+#Format data:
+trap 'rm -f "$TMP_SONGS"' EXIT
+TMP_SONGS=$(mktemp) || exit 1
+
+END=${#no_of_artists[@]}
+count=0
+for i in $(seq 0 $((END-1))); do
+	current_artists=$()
+	for j in $(seq 1 ${no_of_artists[i]}); do
+		current_artists+="${artist_names[$count]}, "	
+
+		count=$((count+1))
+	done
+
+	current_artists_sorted=$(echo ${current_artists[*]} | tr " " "\n" | sort -u | tr "\n" " " | sed 's/, $/:/')
+	echo \"$current_artists_sorted ${song_names[i]}\" | sed 's/_/ /g' >> $TMP_SONGS
+done
+
+youtube-dl --extract-audio --audio-format mp3 --embed-thumbnail --audio-quality 0 --default-search "ytsearch" -a $TMP_SONGS -o "$dir/%(title)s.(ext)s"
+
