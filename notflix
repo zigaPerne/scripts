@@ -1,0 +1,8 @@
+#!/bin/sh
+
+query=$(printf '%s' "$*" | tr ' ' '+')
+link_end=$(curl -s "https://www.1337x.wtf/search/$query/1/" | grep -Po "\/torrent\/[1-9]{7}\/(.*?)\/" | head -1)
+magnet=$(curl -s "https://www.1337x.wtf$link_end" | grep -Po "magnet:\?xt=urn:btih:[a-zA-Z0-9]*" )
+peerflix "$magnet" -k
+
+

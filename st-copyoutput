@@ -1,0 +1,40 @@
+#!/bin/sh
+
+tmpfile1=$(mktemp /tmp/st-copyoutput.XXXXXX)
+tmpfile2=$(mktemp /tmp/st-copyoutput.XXXXXX)
+trap 'rm $tmpfile1 $tmpfile2' 0 1 15 > ~/test 2>&1
+sed -n "w $tmpfile1"
+
+ps1=$(grep "\S" "$tmpfile1" | tail -n1 | cut -d ' ' -f1) 	#get ps1
+eps1=$(printf "%q" $ps1) 	#add escapes for special characters
+sed "/^$eps1.*/i !NEWCOMM!" $tmpfile1 > $tmpfile2 	#add markers between commands
+comm=$(grep -Po "$eps1(.*?)$" $tmpfile2 | tac | tail -n +2 | dmenu -l 15 -p "Select the command you would like to copy:")	
+
+while test $# -gt 0; do		#flags
+	case "$1" in
+		-o)	#only copy command
+			echo "$comm" | xclip -sel clip
+			exit
+			;;
+		-a)	#copy command and output
+			ecomm=$(printf %q "$comm" | sed 's/\//\\\//g') # escapes "/"
+			out=$(sed -n "/^$ecomm/,/^!NEWCOMM!$/p" $tmpfile2) 
+			instances=$(echo "$out" | grep "$ecomm" | wc -l)
+			
+			case $instances in
+				0)
+					exit
+					;;
+				1)
+					echo "$out" | grep "\S" | head -n -1 | xclip -sel clip
+					;;
+				*)
+					backwards=$(echo "$out" | grep "$ecomm" | tac | dmenu -ix -l 15 -p "Found multiple instances of command. Please select one:")
+					forwards=$(($instances-$backwards))
+					echo "$out" | awk "/^$ecomm/&&++k==$forwards,/^!NEWCOMM!$/" | grep "\S" | head -n -1 | xclip -sel clip
+					;;
+			esac
+			exit
+			;;
+	esac
+done

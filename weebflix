@@ -5,5 +5,5 @@ torrents=$(curl -s "https://nyaa.si/?s=seeders&q=$query" | grep -E "\/view\/[0-9
 titles=$(echo $torrents | grep -Po "title=\"(.*?)\"" | sed "/comment/d" | sed 's/title=\"//g' | tr -d '\"' | dmenu -ix -l 15)
 titles=$((titles+1))
 link_end=$(echo $torrents | grep -Eo "\/view\/[0-9]{7}" | uniq | head -$titles | tail -1)
-magnet=$(curl -s "https://nyaa.si$link_end"| grep -Po "magnet:\?xt=urn:btih:[a-zA-Z0-9]*" | head -n 1)
+magnet=$(curl -s "https://nyaa.si$link_end" | grep -Po "magnet:\?xt=urn:btih:[a-zA-Z0-9]*" | head -n 1)
 peerflix "$magnet" -lk

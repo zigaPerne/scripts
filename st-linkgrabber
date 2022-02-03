@@ -1,0 +1,16 @@
+#!/bin/sh
+regex='(((http|https|ftp|gopher)|mailto)[.:][^ >"\t]*|www\.[-a-z0-9.]+)[^ .,;\t>">\):]'
+while test $# -gt 0; do
+	case "$1" in
+		-o)
+			url=$(grep -Po "$regex" | dmenu -l 15 -p "Go:" ) || exit
+			$BROWSER "$url"
+			exit
+			;;
+		-c)
+			url=$(grep -Po "$regex" | dmenu -l 15 -p "Copy:" ) || exit
+			echo $url | xclip -sel clip
+			exit
+			;;
+	esac
+done
