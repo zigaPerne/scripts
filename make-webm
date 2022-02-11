@@ -1,0 +1,28 @@
+#!/bin/sh
+#Script for converting videos to .webm
+#USE:
+#-l link: takes link to a video and converts it
+#-v video: takes video file and converts it
+
+while test $# -gt 0; do
+	case "$1" in
+		-l)
+			title=$(youtube-dl $2 | grep Destination | awk -FDestination:\  '{print $2}')
+			title_no_filetype=$(echo $title | awk -F F. '{print $NR}')
+			echo $title
+			ffmpeg -i "$title" -c:v vp8 -b:v 1M -an "$title_no_filetype".webm 
+			exit
+			;;
+		-v)
+			ffmpeg -i "$2" -c:v vp8 -b:v 1M -an "$(echo $2 | awk -F F. '{print $NR}').webm"
+			exit
+			;;
+		*)
+			echo "Convert videos to webm."
+			echo "Use:"
+			echo "-l link"
+			echo "-v video"
+			exit
+			;;
+	esac
+done
