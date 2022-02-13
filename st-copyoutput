@@ -13,7 +13,11 @@ comm=$(grep -Po "$eps1(.*?)$" $tmpfile2 | tac | tail -n +2 | dmenu -l 15 -p "Sel
 while test $# -gt 0; do		#flags
 	case "$1" in
 		-o)	#only copy command
-			echo "$comm" | xclip -sel clip
+			echo "$comm" | tr -d '\n' | xclip -sel clip
+			exit
+			;;
+		-p)	#only copy command without PS1
+			echo "$comm" | grep -Po "\\$ (.*?)$" | sed "s/^$ //" | tr -d '\n' | xclip -sel clip
 			exit
 			;;
 		-a)	#copy command and output

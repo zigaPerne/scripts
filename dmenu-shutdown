@@ -1,0 +1,12 @@
+#!/bin/sh
+
+choice="Cancel\nShutdown\nSleep\nKill X\nReboot"
+chosen=$(echo -e $choice | dmenu -p "Really shutdown?")
+
+case $chosen in
+	Shutdown) shutdown now ;;
+	Sleep) systemctl suspend ;;
+	"Kill X") killall dwm ;;
+	Reboot) reboot ;;
+	*) exit ;;
+esac

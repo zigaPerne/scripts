@@ -9,7 +9,7 @@ while test $# -gt 0; do
 			;;
 		-c)
 			url=$(grep -Po "$regex" | dmenu -l 15 -p "Copy:" ) || exit
-			echo $url | xclip -sel clip
+			echo $url | tr -d '\n' | xclip -sel clip
 			exit
 			;;
 	esac
