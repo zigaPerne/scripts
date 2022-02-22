@@ -2,13 +2,13 @@
 
 tmpfile1=$(mktemp /tmp/st-copyoutput.XXXXXX)
 tmpfile2=$(mktemp /tmp/st-copyoutput.XXXXXX)
-trap 'rm $tmpfile1 $tmpfile2' 0 1 15
+#trap 'rm $tmpfile1 $tmpfile2' 0 1 15
 sed -n "w $tmpfile1"
 
-ps1=$(grep "\S" "$tmpfile1" | tail -n1 | cut -d ' ' -f1) 	#get ps1
+ps1=$(grep -a "\S" "$tmpfile1" | tail -n1 | cut -d ' ' -f1) 	#get ps1
 eps1=$(printf "%q" $ps1) 	#add escapes for special characters
 sed "/^$eps1.*/i !NEWCOMM!" $tmpfile1 > $tmpfile2 	#add markers between commands
-comm=$(grep -Po "$eps1(.*?)$" $tmpfile2 | tac | tail -n +2 | dmenu -l 15 -p "Select the command you would like to copy:")	
+comm=$(grep -Pao "$eps1(.*?)$" $tmpfile2 | tac | tail -n +2 | dmenu -l 15 -p "Select the command you would like to copy:")	
 
 while test $# -gt 0; do		#flags
 	case "$1" in
