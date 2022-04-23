@@ -3,12 +3,12 @@ regex='(((http|https|ftp|gopher)|mailto)[.:][^ >"\t]*|www\.[-a-z0-9.]+)[^ .,;\t>
 while test $# -gt 0; do
 	case "$1" in
 		-o)
-			url=$(grep -Po "$regex" | dmenu -l 15 -p "Go:" ) || exit
+			url=$(grep -Pao "$regex" | dmenu -l 15 -p "Go:" ) || exit
 			$BROWSER "$url"
 			exit
 			;;
 		-c)
-			url=$(grep -Po "$regex" | dmenu -l 15 -p "Copy:" ) || exit
+			url=$(grep -Pao "$regex" | dmenu -l 15 -p "Copy:" ) || exit
 			echo $url | tr -d '\n' | xclip -sel clip
 			exit
 			;;

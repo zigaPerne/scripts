@@ -2,7 +2,7 @@
 
 tmpfile1=$(mktemp /tmp/st-copyoutput.XXXXXX)
 tmpfile2=$(mktemp /tmp/st-copyoutput.XXXXXX)
-#trap 'rm $tmpfile1 $tmpfile2' 0 1 15
+trap 'rm $tmpfile1 $tmpfile2' 0 1 15
 sed -n "w $tmpfile1"
 
 ps1=$(grep -a "\S" "$tmpfile1" | tail -n1 | cut -d ' ' -f1) 	#get ps1
