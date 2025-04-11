@@ -1,6 +1,7 @@
 #!/bin/sh
 
 query=$(printf '%s' "$*" | tr ' ' '+')
+echo $query
 torrents=$(curl -s "https://nyaa.si/?s=seeders&q=$query" | grep -E "\/view\/[0-9]{7}")
 titles=$(echo $torrents | grep -Po "title=\"(.*?)\"" | sed "/comment/d" | sed 's/title=\"//g' | tr -d '\"' | dmenu -ix -l 15)
 titles=$((titles+1))
