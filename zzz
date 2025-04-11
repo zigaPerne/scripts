@@ -1,0 +1,4 @@
+#!/bin/sh
+exec xautolock -detectsleep -time 5 -locker "/home/ziga/.local/share/scripts/lock" &
+
+exec xidlehook --not-when-audio --timer 900 "systemctl suspend" -
