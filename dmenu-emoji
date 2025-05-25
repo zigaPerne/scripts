@@ -1,0 +1,6 @@
+#!/bin/sh
+selection=$(cat $HOME/Documents/resources/emoji-list.txt | dmenu -l 10)
+
+if [ -n "$selection" ]; then
+  echo -n "$selection" | awk '{print $1}' | xclip -selection clipboard
+fi
